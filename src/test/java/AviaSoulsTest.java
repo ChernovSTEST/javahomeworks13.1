@@ -44,4 +44,51 @@ public class AviaSoulsTest {
 
         Assert.assertArrayEquals(expected, result);
     }
+
+    @Test
+    public void testSearchMultipleTickets() {
+        AviaSouls aviaSouls = new AviaSouls();
+        Ticket ticket1 = new Ticket("A", "B", 100, 10, 12);
+        Ticket ticket2 = new Ticket("A", "B", 150, 11, 13);
+        Ticket ticket3 = new Ticket("A", "B", 200, 12, 14);
+
+        aviaSouls.add(ticket1);
+        aviaSouls.add(ticket2);
+        aviaSouls.add(ticket3);
+
+        Ticket[] result = aviaSouls.search("A", "B");
+
+        Assert.assertEquals(3, result.length);
+        Assert.assertArrayEquals(new Ticket[]{ticket1, ticket2, ticket3}, result);
+    }
+
+    @Test
+    public void testSearchSingleTicket() {
+        AviaSouls aviaSouls = new AviaSouls();
+        Ticket ticket1 = new Ticket("A", "B", 100, 10, 12);
+        Ticket ticket2 = new Ticket("A", "C", 150, 11, 13);
+
+        aviaSouls.add(ticket1);
+        aviaSouls.add(ticket2);
+
+        Ticket[] result = aviaSouls.search("A", "B");
+
+        Assert.assertEquals(1, result.length);
+        Assert.assertArrayEquals(new Ticket[]{ticket1}, result);
+    }
+
+    @Test
+    public void testSearchNoTickets() {
+        AviaSouls aviaSouls = new AviaSouls();
+        Ticket ticket1 = new Ticket("A", "C", 100, 10, 12);
+        Ticket ticket2 = new Ticket("A", "D", 150, 11, 13);
+
+        aviaSouls.add(ticket1);
+        aviaSouls.add(ticket2);
+
+        Ticket[] result = aviaSouls.search("A", "B");
+
+        Assert.assertEquals(0, result.length);
+        Assert.assertArrayEquals(new Ticket[0], result);
+    }
 }
