@@ -3,6 +3,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 public class AviaSoulsTest {
 
@@ -15,13 +16,13 @@ public class AviaSoulsTest {
         TicketTimeComparator comparator = new TicketTimeComparator();
 
         // Проверяем, что ticket1 меньше чем ticket2
-        assertEquals("ticket1 должен быть меньше ticket2", false, comparator.compare(ticket1, ticket2) < 0);
+        assertArrayEquals(new boolean[]{false}, new boolean[]{comparator.compare(ticket1, ticket2) < 0});
 
         // Проверяем, что ticket2 больше чем ticket1
-        assertEquals("ticket2 должен быть больше ticket1", false, comparator.compare(ticket2, ticket1) > 0);
+        assertArrayEquals(new boolean[]{false}, new boolean[]{comparator.compare(ticket2, ticket1) > 0});
 
         // Проверяем, что ticket1 равен ticket3 (одинаковое время полета)
-        assertEquals("ticket1 должен быть равен ticket3", 0, comparator.compare(ticket1, ticket3));
+        assertArrayEquals(new int[]{0}, new int[]{comparator.compare(ticket1, ticket3)});
     }
     @Test
     public void testSearchAndSortBy() {
@@ -40,9 +41,9 @@ public class AviaSoulsTest {
         Ticket[] result = aviaSouls.searchAndSortBy("A", "B", comparator);
 
         // Ожидаем, что результат будет содержать только ticket1
-        Ticket[] expected = { ticket1 };
+        Ticket[] expected = {ticket1};
 
-        Assert.assertArrayEquals(expected, result);
+        assertArrayEquals(expected, result);
     }
 
     @Test
@@ -58,8 +59,9 @@ public class AviaSoulsTest {
 
         Ticket[] result = aviaSouls.search("A", "B");
 
-        Assert.assertEquals(3, result.length);
-        Assert.assertArrayEquals(new Ticket[]{ticket1, ticket2, ticket3}, result);
+        Ticket[] expected = {ticket1, ticket2, ticket3};
+
+        assertArrayEquals(expected, result);
     }
 
     @Test
@@ -73,8 +75,9 @@ public class AviaSoulsTest {
 
         Ticket[] result = aviaSouls.search("A", "B");
 
-        Assert.assertEquals(1, result.length);
-        Assert.assertArrayEquals(new Ticket[]{ticket1}, result);
+        Ticket[] expected = {ticket1};
+
+        assertArrayEquals(expected, result);
     }
 
     @Test
@@ -88,7 +91,8 @@ public class AviaSoulsTest {
 
         Ticket[] result = aviaSouls.search("A", "B");
 
-        Assert.assertEquals(0, result.length);
-        Assert.assertArrayEquals(new Ticket[0], result);
+        Ticket[] expected = new Ticket[0];
+
+        assertArrayEquals(expected, result);
     }
 }
